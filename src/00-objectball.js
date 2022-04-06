@@ -116,14 +116,83 @@ function gameObject(){
     }
 }
 
-function numPointsScored(playersName){
-    const game = gameObject()
-    for (const team in game){
-        
-    }
-}
-    
+const game = gameObject()
+const players = [game.home.players, game.away.players]
 
+function allPlayers() {
+    const all = players.map(function(team) {
+        const newArr = [] 
+        for (const player in team) {
+            newArr.push({ nameOfPlayer: player, ...team[player] })
+        }
+        return newArr
+    })
+    return all.flat()
+}
+
+function findPlayer(playerName) {
+    return allPlayers().find(player => {
+        return player.nameOfPlayer === playerName
+    })
+}
+    function numPointsScored(playersName) {
+        return findPlayer(playersName).points
+    }
+
+    function shoeSize(playersName) {
+        return findPlayer(playersName).shoe
+    }
+
+    function playerStats(playersName){
+        return findPlayer(playersName).players 
+    }
+
+    function isHome(team) {
+        return team === homeTeam.teamName
+    }
+
+    const homeTeam = game.home
+    const awayTeam = game.away
+
+    function teamColors(teamName) {
+        if (awayTeamName === teamName) {
+            return awayColors
+        }
+        else (homeTeamName === teamName)
+        return homeColors
+    }
+
+    const teamNames = () => {
+        const teamArr = object.values(gameObject()).map(function(go){
+            return [go.teamName][0]
+        });
+        return teamArr
+    }
+
+    function playerNumbers(teamName) {
+        if (teamName === homeTeamName) {
+            const homeNumbers = object.values(homePlayers).map(function(homePlayers) {
+                return [homePlayers.number]
+            })
+            return homeNumbers.flat()
+        }
+        else (teamName === awayTeamName)
+        const awayNumbers = object.values(awayPlayers).map(function(awayPlayers){
+            return [awayPlayers.number]
+        })
+        return awayNumbers.flat()
+    }
+
+    function bigShoeRebounds(){
+        const biggestShoe = { size: 0, player: '' }
+        for (const player of allPlayers()) {
+            if (player.nameOfPlayer.shoe > biggestShoe.size) {
+                biggestShoe.size = player.nameOfPlayer.size
+                biggestShoe.player = player.nameOfPlayer
+            }
+        }
+        return biggestShoe.player
+    }
 
     
 
